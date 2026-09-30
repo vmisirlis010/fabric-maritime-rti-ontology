@@ -14,21 +14,26 @@ ONELAKE = f"https://onelake.dfs.fabric.microsoft.com/{WS}/{LH}"
 
 _tok = {}
 def get_token(resource):
+    # az may hand back a cached token close to expiry, so refresh on the token's real expires_on (with 5 min margin)
     t = _tok.get(resource)
-    if not t or time.time() - t[1] > 1800:
-        cmd = ["az", "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"]
+    if not t or time.time() > t[1] - 300:
+        cmd = ["az", "account", "get-access-token", "--resource", resource, "--query", "[accessToken, expires_on]", "-o", "tsv"]
         if SUB: cmd[3:3] = ["--subscription", SUB]
-        v = subprocess.check_output(cmd, shell=True, text=True).strip()
-        _tok[resource] = (v, time.time())
+        v, exp = subprocess.check_output(cmd, shell=True, text=True).split()
+        _tok[resource] = (v, float(exp))
     return _tok[resource][0]
 
-def dfs(method, path, data=None):
+def dfs(method, path, data=None, _retry=True):
     req = urllib.request.Request(path if path.startswith("http") else f"{ONELAKE}/{path}", data=data, method=method,
                                  headers={"Authorization": f"Bearer {get_token('https://storage.azure.com')}", "x-ms-version": "2021-08-06"})
     try:
         with urllib.request.urlopen(req, timeout=20) as r:
             return r.status, r.read()
     except urllib.error.HTTPError as e:
+        if e.code in (401, 403) and _retry:
+            print(f"[WARN] OneLake {e.code} - refreshing storage token", flush=True)
+            _tok.pop("https://storage.azure.com", None)
+            return dfs(method, path, data, _retry=False)
         return e.code, e.read()
 
 def _rel(p):

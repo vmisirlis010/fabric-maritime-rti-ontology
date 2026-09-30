@@ -4,6 +4,8 @@ End-to-end **Microsoft Fabric** demo for the **shipping / tanker industry**: liv
 
 The story follows **Nereus Tankers S.A.**, a *fictional* Athens-based operator of 8 crude and product tankers trading in the Eastern Mediterranean and the Adriatic. Every vessel streams AIS position, main-engine, cargo-tank and emissions telemetry; Fabric turns that stream into a live operations picture, an automatic response to a main-engine failure, and a data agent you can ask questions in plain English.
 
+![Fleet Overview - live Real-Time Dashboard with 8 tankers on the map](docs/images/dashboard-fleet-overview.png)
+
 > **Acknowledgement** – This repository is based on **George Alexiou**'s excellent [**fabric-energy-rti-ontology**](https://github.com/galex87/fabric-energy-rti-ontology) demo (energy sector: wind, solar, grid). The overall architecture – simulator → Eventstream → Eventhouse → Real-Time Dashboard, an Activator rule that runs a Fabric notebook to dispatch an asset via lakehouse control files, the Anomaly Detector, and an Ontology-grounded Data Agent – is his design. This repo re-builds that pattern **with a focus on shipping**: a new maritime domain model, simulator, dashboards, ontology, agent instructions and a REST-based deployer. Thank you, George!
 
 ---
@@ -19,6 +21,68 @@ The story follows **Nereus Tankers S.A.**, a *fictional* Athens-based operator o
 | 5 | **Ontology + Data Agent** | A business model of Vessel, MainEngine, CargoTank, Voyage, Port, Charterer, MaintenanceOrder and EmissionsRecord – static Lakehouse data and live Eventhouse telemetry on the same entity – queried in natural language. |
 
 A presenter talk track is in [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) and tested agent prompts are in [docs/PROMPTS.md](docs/PROMPTS.md).
+
+## Walkthrough
+
+### Act 1 · One live picture of the fleet
+
+Eight tankers stream position, main-engine, cargo-tank and emissions telemetry every couple of seconds. The **Fleet Overview** page (above) shows them live on the map with status, fuel burn, ETS exposure and sea state; the **Main Engines** page drills into every engine – load, rpm, exhaust temperature and turbocharger vibration, right now.
+
+The telemetry lands through a single **Eventstream**: one custom endpoint, a filter per stream type, one Eventhouse table per stream – and the engine stream also feeds Activator.
+
+![FleetStream Eventstream - custom endpoint, per-stream filters, Eventhouse destinations and the Activator branch](docs/images/eventstream-topology.png)
+
+### Act 2 · A main-engine failure, handled without a human in the loop
+
+`./demo-control.ps1 trigger` injects a main-engine critical alarm on **NT Ariadne**. Within seconds the engine load collapses and exhaust temperature and turbocharger vibration spike:
+
+![NT Ariadne main engine - load collapse, exhaust and vibration spike, then the reduced-load diversion profile](docs/images/failure-engine-telemetry.png)
+
+**ME-Critical-Alarm-Activator** watches `fault_type` on the live engine stream. When it *changes to* `ME_CRITICAL_ALARM`, the rule runs the `Divert_Vessel_To_Yard` notebook:
+
+![Activator rule - monitor fault_type, condition "changes to ME_CRITICAL_ALARM", action Run Notebook Divert_Vessel_To_Yard](docs/images/activator-rule.png)
+
+The notebook re-routes the vessel and opens a **Critical maintenance order**. A few minutes later the dashboard shows the whole loop closed: **Critical Engine Alarms = 1**, a `1-CRITICAL` row in *Active Alarms*, and NT Ariadne **Diverted – Engine Repair**, heading for the Perama repair zone.
+
+![Fleet Overview after the failure - critical alarm raised and NT Ariadne diverted to the repair yard](docs/images/failure-alarm-and-diversion.png)
+
+### Act 3 · Emissions & compliance, live
+
+The same stream computes CO₂, **IMO CII** (attained vs required, A–E rating) and **EU ETS** allowance exposure per voyage – while the ship is still at sea and you can still act.
+
+![Emissions & Compliance - CII and EU ETS per voyage, EUA cost by vessel, CII attained vs required](docs/images/dashboard-emissions-compliance.png)
+
+### Act 4 · Catch it before it breaks
+
+*NT Kallisto*'s turbocharger bearing slowly wears. KQL's native `series_decompose_anomalies` learns each engine's baseline on the stream and flags the drift – no model deployment, no fixed threshold – long before a hard alarm.
+
+![Main Engines - KQL native-ML anomaly detection on turbocharger vibration, bearing wear trend and NT Ariadne live status](docs/images/dashboard-main-engines.png)
+
+The same pattern covers cargo safety: *NT Nefeli* COT 3S inert-gas O₂ creeping toward the 8 % SOLAS limit.
+
+![Cargo & Safety - inert-gas O2, pressure, temperature and level per cargo tank](docs/images/dashboard-cargo-safety.png)
+
+And the operating environment – wind and sea state per sea area:
+
+![Weather & Sea State - wind speed map, sea state table and wave height trend](docs/images/dashboard-weather.png)
+
+### Act 5 · One business model, plain-English questions
+
+**NereusFleetOntology** turns tables into a business model: 8 entity types and 9 relationships – Vessel, MainEngine, CargoTank, Voyage, Port, Charterer, MaintenanceOrder, EmissionsRecord.
+
+![Ontology graph - 8 entity types and 9 relationships](docs/images/ontology-graph.png)
+
+![Vessel entity and its relationships in the ontology editor](docs/images/ontology-vessel-entity.png)
+
+Each entity combines **static reference data from the Lakehouse** (`vessels`) with **live telemetry from the Eventhouse** (`VesselPositions`, marked *Timeseries*) – one business object, two physical sources:
+
+![Vessel entity - properties bound to the vessels Lakehouse table and the VesselPositions Eventhouse stream](docs/images/ontology-vessel-bindings.png)
+
+![Vessel instances - the 8 fictional tankers with their particulars](docs/images/ontology-vessel-instances.png)
+
+**NereusFleetAgent** answers in plain English, grounded on the ontology instead of guessing joins:
+
+![Data Agent - high-priority maintenance orders with vessel, equipment, status and superintendent](docs/images/data-agent.png)
 
 ## Architecture
 
@@ -40,6 +104,8 @@ flowchart LR
 ```
 
 ### Fabric items created
+
+![Workspace items](docs/images/workspace-items.png)
 
 | Item | Type | Purpose |
 |---|---|---|

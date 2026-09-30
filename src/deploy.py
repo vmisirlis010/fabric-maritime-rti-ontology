@@ -28,12 +28,13 @@ def save(): STATE_F.write_text(json.dumps(state, indent=2))
 
 _tok = {}
 def token(res="https://api.fabric.microsoft.com"):
+    # refresh on the token's real expires_on (az may return a cached token that is close to expiry)
     t = _tok.get(res)
-    if not t or time.time() - t[1] > 1800:
-        cmd = ["az", "account", "get-access-token", "--resource", res, "--query", "accessToken", "-o", "tsv"]
+    if not t or time.time() > t[1] - 300:
+        cmd = ["az", "account", "get-access-token", "--resource", res, "--query", "[accessToken, expires_on]", "-o", "tsv"]
         if SUB: cmd[3:3] = ["--subscription", SUB]
-        v = subprocess.check_output(cmd, shell=True, text=True).strip()
-        _tok[res] = (v, time.time())
+        v, exp = subprocess.check_output(cmd, shell=True, text=True).split()
+        _tok[res] = (v, float(exp))
     return _tok[res][0]
 
 def http(method, url, body=None, res="https://api.fabric.microsoft.com", raw=None, headers=None):
