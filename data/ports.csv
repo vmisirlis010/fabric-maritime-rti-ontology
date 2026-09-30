@@ -1,0 +1,11 @@
+port_id,port_name,country,port_type,eu_port,has_repair_yard,latitude,longitude
+CEYHAN,Ceyhan Marine Terminal,Turkey,Crude Loading Terminal,false,false,36.8,35.8
+SIDIKERIR,Sidi Kerir (SUMED),Egypt,Crude Loading Terminal,false,false,31.13,29.62
+ESSIDER,Es Sider Oil Terminal,Libya,Crude Loading Terminal,false,false,30.65,18.35
+PORTSAID,Port Said (Suez Canal North),Egypt,Canal Transit / Bunkering,false,false,31.3,32.33
+TRIESTE,Trieste SIOT Terminal,Italy,Refinery Terminal,true,false,45.64,13.75
+AUGUSTA,Augusta Refinery Terminal,Italy,Refinery Terminal,true,false,37.2,15.25
+ASPRO,Aspropyrgos Refinery Terminal,Greece,Refinery Terminal,true,false,38.02,23.58
+PIRAEUS,Piraeus Anchorage,Greece,Bunkering Hub,true,false,37.94,23.62
+LIMASSOL,Limassol Vassiliko Terminal,Cyprus,Product Terminal,true,false,34.655,33.02
+PERAMA,Perama Ship Repair Zone,Greece,Repair Yard,true,true,37.955,23.575

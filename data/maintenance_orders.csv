@@ -1,0 +1,25 @@
+order_id,vessel_id,equipment,order_type,priority,status,superintendent,yard_port_id,created_date,cost_usd
+MO-26-0001,NT-ARI,Inert Gas System,Preventive,High,In Progress,Kostas Andreou,AUGUSTA,2026-06-28,62000
+MO-26-0002,NT-ARI,Cargo Pump,Preventive,Medium,Open,Kostas Andreou,PERAMA,2026-08-17,14000
+MO-26-0003,NT-KAL,Fuel Oil Purifier,Preventive,Medium,Scheduled,Eleni Georgiou,LIMASSOL,2026-05-12,19000
+MO-26-0004,NT-KAL,Fuel Oil Purifier,Preventive,Medium,Scheduled,Eleni Georgiou,AUGUSTA,2026-04-25,57000
+MO-26-0005,NT-KAL,Main Engine,Corrective,Medium,Completed,Eleni Georgiou,AUGUSTA,2026-08-21,80000
+MO-26-0006,NT-THA,Fuel Oil Purifier,Preventive,Low,Scheduled,Kostas Andreou,PIRAEUS,2026-05-25,93000
+MO-26-0007,NT-THA,Ballast Water Treatment,Inspection,Low,Completed,Kostas Andreou,AUGUSTA,2026-08-28,91000
+MO-26-0008,NT-THA,Steering Gear,Inspection,Medium,Scheduled,Kostas Andreou,LIMASSOL,2026-08-21,6000
+MO-26-0009,NT-NEF,Cargo Pump,Preventive,Low,Completed,Maria Papadaki,LIMASSOL,2026-03-16,40000
+MO-26-0010,NT-NEF,Turbocharger,Inspection,High,Completed,Maria Papadaki,LIMASSOL,2026-09-25,14000
+MO-26-0011,NT-NEF,Turbocharger,Inspection,High,Scheduled,Maria Papadaki,AUGUSTA,2026-04-23,74000
+MO-26-0012,NT-ELE,Ballast Water Treatment,Inspection,Medium,Scheduled,Eleni Georgiou,LIMASSOL,2026-04-14,14000
+MO-26-0013,NT-ELE,Turbocharger,Inspection,Medium,Completed,Eleni Georgiou,PERAMA,2026-03-25,79000
+MO-26-0014,NT-ELE,Turbocharger,Inspection,Medium,Open,Eleni Georgiou,PIRAEUS,2026-04-23,72000
+MO-26-0015,NT-AND,Fuel Oil Purifier,Preventive,Medium,In Progress,Nikos Stavrou,PERAMA,2026-08-26,83000
+MO-26-0016,NT-AND,Ballast Water Treatment,Inspection,High,Completed,Nikos Stavrou,LIMASSOL,2026-06-22,54000
+MO-26-0017,NT-AND,Main Engine,Corrective,High,Scheduled,Nikos Stavrou,PIRAEUS,2026-04-12,30000
+MO-26-0018,NT-DAN,Turbocharger,Inspection,Medium,Completed,Maria Papadaki,PIRAEUS,2026-03-10,76000
+MO-26-0019,NT-DAN,Turbocharger,Inspection,Low,In Progress,Maria Papadaki,AUGUSTA,2026-07-10,13000
+MO-26-0020,NT-DAN,Steering Gear,Inspection,High,Completed,Maria Papadaki,PERAMA,2026-08-18,48000
+MO-26-0021,NT-PEN,Inert Gas System,Preventive,Low,Completed,Nikos Stavrou,LIMASSOL,2026-06-25,65000
+MO-26-0022,NT-PEN,Cargo Pump,Preventive,Medium,Completed,Nikos Stavrou,PIRAEUS,2026-08-20,37000
+MO-26-0023,NT-PEN,Inert Gas System,Preventive,Low,Completed,Nikos Stavrou,PERAMA,2026-07-21,22000
+MO-26-0024,NT-KAL,Turbocharger,Inspection,High,Open,Eleni Georgiou,PERAMA,2026-09-22,38000

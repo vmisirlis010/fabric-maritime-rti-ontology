@@ -1,0 +1,5 @@
+{
+  "capacityId": "<your Fabric capacity GUID (F2+ or trial)>",
+  "subscription": "<optional: Azure subscription name or id used by 'az account get-access-token'; remove to use the default>",
+  "workspaceName": "Maritime Fleet RTI Demo"
+}

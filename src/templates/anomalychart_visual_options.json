@@ -1,0 +1,33 @@
+{
+  "multipleYAxes": {
+    "additional": [],
+    "showMultiplePanels": false,
+    "base": {
+      "horizontalLines": [],
+      "yAxisScale": "linear",
+      "yAxisMaximumValue": null,
+      "yAxisMinimumValue": null,
+      "columns": [],
+      "label": "",
+      "id": "-1"
+    }
+  },
+  "seriesColors": {},
+  "legendLocation": "bottom",
+  "xColumn": null,
+  "yColumns": null,
+  "seriesColumns": null,
+  "verticalLine": "",
+  "crossFilterDisabled": false,
+  "drillthroughDisabled": false,
+  "forceAxisTicks": false,
+  "anomalyColumns": [
+    "anomalies"
+  ],
+  "crossFilter": [],
+  "drillthrough": [],
+  "selectedDataOnLoad": {
+    "all": true,
+    "limit": 10
+  }
+}

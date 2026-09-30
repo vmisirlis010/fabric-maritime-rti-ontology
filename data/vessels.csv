@@ -1,0 +1,9 @@
+vessel_id,vessel_name,vessel_type,segment,dwt,built_year,flag,class_society,shipyard,technical_superintendent,service_speed_kn,status
+NT-ARI,NT Ariadne,Suezmax,Crude,158000,2019,Greece,LR,Hyundai Heavy Industries,Kostas Andreou,13.5,In Service
+NT-KAL,NT Kallisto,Aframax,Crude,115000,2011,Malta,DNV,Samsung Heavy Industries,Eleni Georgiou,12.8,In Service
+NT-THA,NT Thalassa,Suezmax,Crude,157500,2016,Greece,ABS,Hyundai Samho,Kostas Andreou,13.0,In Service
+NT-NEF,NT Nefeli,LR2,Product,109900,2021,Greece,LR,Daehan Shipbuilding,Maria Papadaki,13.8,In Service
+NT-ELE,NT Electra,Aframax,Crude,113000,2014,Malta,BV,Sumitomo Heavy Industries,Eleni Georgiou,12.5,In Service
+NT-AND,NT Andromeda,Suezmax,Crude,159000,2020,Greece,DNV,Hyundai Heavy Industries,Nikos Stavrou,13.2,In Service
+NT-DAN,NT Danae,MR,Product,50000,2017,Greece,ABS,Hyundai Mipo,Maria Papadaki,14.0,In Service
+NT-PEN,NT Penelope,Aframax,Crude,114500,2009,Malta,LR,Tsuneishi,Nikos Stavrou,12.9,In Service

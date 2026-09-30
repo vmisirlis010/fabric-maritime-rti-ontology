@@ -1,0 +1,11 @@
+# Local configuration and runtime state (contain tenant-specific ids)
+config.json
+.state.json
+.sim.pid
+sim.log
+sim.log.err
+
+# Python
+__pycache__/
+*.pyc
+.venv/
